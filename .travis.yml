@@ -1,0 +1,25 @@
+language: cpp
+sudo: true
+dist: bionic
+compiler:
+  - clang
+os:
+  - linux
+branches:
+  only:
+    - master
+notifications:
+  email: true
+
+before_script:
+  - curl https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+  - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get -qq update
+  - sudo apt-get -y install clang-9 cmake
+script:
+  - export CC="clang-9"
+  - export CXX="clang++-9"
+  - clang --version
+  - cmake .
+  - cmake --build .
+  - make test
