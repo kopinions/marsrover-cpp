@@ -5,8 +5,20 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 add_executable(game src/main.cpp)
 
-
 include(FetchContent)
+FetchContent_Declare(
+        rangev3
+        GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
+        GIT_TAG        0.10.0
+)
+FetchContent_GetProperties(rangev3)
+if(NOT rangev3_POPULATED)
+    FetchContent_Populate(rangev3)
+    add_subdirectory(${rangev3_SOURCE_DIR} ${rangev3_BINARY_DIR})
+    include_directories(${rangev3_SOURCE_DIR}/include)
+endif()
+
+
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git

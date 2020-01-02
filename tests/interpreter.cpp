@@ -33,3 +33,16 @@ TEST(Interpreter, should_able_to_parse_the_placing_and_facing) {
     EXPECT_TRUE(dynamic_cast<cmd::placing<mars>*>(cmds.at(0).get()) != NULL);
     EXPECT_TRUE(dynamic_cast<cmd::facing<mars>*>(cmds.at(1).get()) != NULL);
 }
+
+
+TEST(Interpreter, should_the_placing_command_make_the_mar_under_place) {
+    std::string location = "1 2";
+    interpreter it({std::make_shared<exp::placing>()});
+    context ctx(location);
+    auto cmds = it.interpret(ctx);
+    EXPECT_EQ(cmds.size(), 1);
+    mars mar{};
+    mar.execute(cmds.at(0));
+    EXPECT_EQ(mar.coord().x(), 1);
+    EXPECT_EQ(mar.coord().y(), 2);
+}

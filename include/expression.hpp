@@ -21,8 +21,9 @@ namespace exp {
     class placing: public  expression {
     public:
         std::shared_ptr<cmd::command<mars>> evaluate(context ctx) override {
-            return std::make_shared<cmd::placing<mars>>();
-
+            const std::string x = ctx.next();
+            const std::string y = ctx.next();
+            return std::make_shared<cmd::placing<mars>>(std::stoi(x), std::stoi(y));
         }
     };
 }

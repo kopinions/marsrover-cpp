@@ -1,5 +1,7 @@
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
+
+#include "coordinate.hpp"
 namespace cmd {
     template<typename T>
     class command {
@@ -21,8 +23,14 @@ namespace cmd {
 
     template<typename T>
     class placing : public command<T> {
-        void applied(T &t) override {
+    private:
+        int _x, _y;
+    public:
+        placing(int x, int y) : _x(x), _y(y) {
 
+        }
+        void applied(T &t) override {
+            t.locate(coordinate(_x, _y));
         }
     };
 

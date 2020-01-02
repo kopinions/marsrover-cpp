@@ -1,9 +1,17 @@
 
+#ifndef COORDINATE_HPP
+#define COORDINATE_HPP
+
 class coordinate {
- private:
-  int _x;
-  int _y;
+private:
+    int _x;
+    int _y;
 public:
-  int x() { return _x;};
-  int y() {return _y;};
+    coordinate(int x, int y) : _x(x), _y(y) {}
+
+    int x() { return _x; };
+
+    int y() { return _y; };
 };
+
+#endif//COORDINATE_HPP
