@@ -10,7 +10,7 @@ TEST(Interpreter, should_able_to_parse_the_placing_command) {
     EXPECT_EQ(cmds.size(), 1);
     std::shared_ptr<cmd::command<mars>> &ptr = cmds.at(0);
     cmd::command<mars> *pCommand = ptr.get();
-    EXPECT_TRUE(dynamic_cast<cmd::placing<mars>*>(pCommand) != NULL);
+    EXPECT_TRUE(dynamic_cast<cmd::placing<mars> *>(pCommand) != NULL);
 }
 
 TEST(Interpreter, should_able_to_parse_the_facing_command) {
@@ -21,5 +21,15 @@ TEST(Interpreter, should_able_to_parse_the_facing_command) {
     EXPECT_EQ(cmds.size(), 1);
     std::shared_ptr<cmd::command<mars>> &ptr = cmds.at(0);
     cmd::command<mars> *pCommand = ptr.get();
-    EXPECT_TRUE(dynamic_cast<cmd::facing<mars>*>(pCommand) != NULL);
+    EXPECT_TRUE(dynamic_cast<cmd::facing<mars> *>(pCommand) != NULL);
+}
+
+TEST(Interpreter, should_able_to_parse_the_placing_and_facing) {
+    std::string face = "1 2 N";
+    interpreter it({std::make_shared<exp::placing>(), std::make_shared<exp::facing>()});
+    context ctx(face);
+    auto cmds = it.interpret(ctx);
+    EXPECT_EQ(cmds.size(), 2);
+    EXPECT_TRUE(dynamic_cast<cmd::placing<mars>*>(cmds.at(0).get()) != NULL);
+    EXPECT_TRUE(dynamic_cast<cmd::facing<mars>*>(cmds.at(1).get()) != NULL);
 }
