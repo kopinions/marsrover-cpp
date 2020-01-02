@@ -4,11 +4,22 @@
 
 TEST(Interpreter, should_able_to_parse_the_placing_command) {
     std::string location = "1 2";
-    interpreter it;
+    interpreter it({std::make_shared<exp::placing>()});
     context ctx(location);
     auto cmds = it.interpret(ctx);
     EXPECT_EQ(cmds.size(), 1);
-    std::shared_ptr<command<mars>> &ptr = cmds.at(0);
-    command<mars> *pCommand = ptr.get();
-    EXPECT_TRUE(dynamic_cast<placing<mars>*>(pCommand) != NULL);
+    std::shared_ptr<cmd::command<mars>> &ptr = cmds.at(0);
+    cmd::command<mars> *pCommand = ptr.get();
+    EXPECT_TRUE(dynamic_cast<cmd::placing<mars>*>(pCommand) != NULL);
+}
+
+TEST(Interpreter, should_able_to_parse_the_facing_command) {
+    std::string face = "N";
+    interpreter it({std::make_shared<exp::facing>()});
+    context ctx(face);
+    auto cmds = it.interpret(ctx);
+    EXPECT_EQ(cmds.size(), 1);
+    std::shared_ptr<cmd::command<mars>> &ptr = cmds.at(0);
+    cmd::command<mars> *pCommand = ptr.get();
+    EXPECT_TRUE(dynamic_cast<cmd::facing<mars>*>(pCommand) != NULL);
 }
