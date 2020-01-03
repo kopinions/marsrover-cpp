@@ -31,8 +31,8 @@ TEST(Interpreter, should_able_to_parse_the_placing_and_facing) {
     context ctx(face);
     auto cmds = it.interpret(ctx);
     EXPECT_EQ(cmds.size(), 2);
-    EXPECT_TRUE(dynamic_cast<cmd::placing<mars>*>(cmds.at(0).get()) != NULL);
-    EXPECT_TRUE(dynamic_cast<cmd::facing<mars>*>(cmds.at(1).get()) != NULL);
+    EXPECT_TRUE(dynamic_cast<cmd::placing<mars> *>(cmds.at(0).get()) != NULL);
+    EXPECT_TRUE(dynamic_cast<cmd::facing<mars> *>(cmds.at(1).get()) != NULL);
 }
 
 
@@ -63,7 +63,7 @@ TEST(Interpreter, should_the_facing_command_make_the_mar_facing_direction) {
 TEST(Interpreter, should_able_to_parse_rotation_left_command) {
     mars mar{};
     mar.execute(std::make_shared<cmd::facing<mars>>(direction::E));
-    
+
     std::string cmd = "L";
     interpreter it({std::make_shared<exp::composite>()});
     context ctx(cmd);
@@ -97,4 +97,23 @@ TEST(Interpreter, should_able_to_parse_move_command) {
     EXPECT_EQ(mar.facing(), direction::E);
     EXPECT_EQ(mar.coord().x(), 2);
     EXPECT_EQ(mar.coord().y(), 2);
+}
+
+TEST(Interpreter, should_able_to_parse_all_commands) {
+    std::string face = "1 2 N\n"
+                       "LMLMLMLMM";
+    interpreter it({std::make_shared<exp::placing>(),
+                    std::make_shared<exp::facing>(),
+                    std::make_shared<exp::composite>()
+                   });
+    context ctx(face);
+    auto cmds = it.interpret(ctx);
+    mars mar{};
+    for (const auto &cmd : cmds) {
+        mar.execute(cmd);
+    }
+
+    EXPECT_EQ(mar.facing(), direction::N);
+    EXPECT_EQ(mar.coord().x(), 1);
+    EXPECT_EQ(mar.coord().y(), 3);
 }

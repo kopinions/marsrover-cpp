@@ -15,9 +15,9 @@ public:
 
     }
 
-    std::vector<std::shared_ptr<cmd::command<mars>>> interpret(context ctx) {
+    std::vector<std::shared_ptr<cmd::command<mars>>> interpret(context &ctx) {
         auto cmds = std::vector<std::shared_ptr<cmd::command<mars>>>();
-        for (const auto& e: _expressions) {
+        for (const auto &e: _expressions) {
             cmds.push_back(e->evaluate(ctx));
         }
         return cmds;

@@ -11,7 +11,7 @@ namespace exp {
     public:
         virtual ~expression() = default;
 
-        virtual std::shared_ptr<cmd::command<mars>> evaluate(context ctx) = 0;
+        virtual std::shared_ptr<cmd::command<mars>> evaluate(context &ctx) = 0;
     };
 
     class facing : public expression {
@@ -23,7 +23,7 @@ namespace exp {
                 {"N", direction::N}
         };
     public:
-        std::shared_ptr<cmd::command<mars>> evaluate(context ctx) override {
+        std::shared_ptr<cmd::command<mars>> evaluate(context &ctx) override {
             const std::string direction = ctx.next();
             return std::make_shared<cmd::facing<mars>>(mapping[direction]);
         }
@@ -31,7 +31,7 @@ namespace exp {
 
     class placing : public expression {
     public:
-        std::shared_ptr<cmd::command<mars>> evaluate(context ctx) override {
+        std::shared_ptr<cmd::command<mars>> evaluate(context &ctx) override {
             const std::string x = ctx.next();
             const std::string y = ctx.next();
             return std::make_shared<cmd::placing<mars>>(std::stoi(x), std::stoi(y));
@@ -45,7 +45,7 @@ namespace exp {
                 {'L', direction::turn::CCW},
         };
     public:
-        std::shared_ptr<cmd::command<mars>> evaluate(context ctx) override {
+        std::shared_ptr<cmd::command<mars>> evaluate(context &ctx) override {
             const std::string x = ctx.next();
             std::vector<std::shared_ptr<cmd::command<mars>>> cmds;
             for (auto c:x) {

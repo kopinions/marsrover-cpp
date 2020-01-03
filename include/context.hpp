@@ -9,9 +9,10 @@ private:
     std::vector<std::string> _tokens;
     std::vector<std::string>::iterator iter;
 public:
-    context(std::string input)  {
+    context(std::string input) {
+        std::replace(input.begin(), input.end(), '\n', ' ');
         _tokens = input | ranges::views::split(' ') | ranges::to<std::vector<std::string>>();
-         iter = _tokens.begin();
+        iter = _tokens.begin();
     }
 
     std::string next() {

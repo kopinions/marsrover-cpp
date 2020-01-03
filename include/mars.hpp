@@ -5,7 +5,7 @@
 
 class mars {
 private:
-    coordinate _coordinate = coordinate(0,0);
+    coordinate _coordinate{};
     direction _direction{};
 public:
     void execute(const std::shared_ptr<cmd::command<mars>> &cmd) {
@@ -16,11 +16,11 @@ public:
         return _coordinate;
     }
 
-    void locate(class coordinate c)  {
+    void locate(class coordinate c) {
         _coordinate = c;
     };
 
-    void facing(direction  direction)  {
+    void facing(direction direction) {
         _direction = direction;
     };
 

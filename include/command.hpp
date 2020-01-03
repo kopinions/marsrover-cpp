@@ -72,7 +72,7 @@ namespace cmd {
     };
 
     template<typename T>
-    class move: public command<T> {
+    class move : public command<T> {
     private:
     public:
         move() {};

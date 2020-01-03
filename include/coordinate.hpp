@@ -10,6 +10,8 @@ private:
     int _x;
     int _y;
 public:
+    coordinate() {}
+
     coordinate(int x, int y) : _x(x), _y(y) {}
 
     int x() { return _x; };
