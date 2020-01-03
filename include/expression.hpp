@@ -12,9 +12,17 @@ namespace exp {
     };
 
     class facing : public expression {
+    private:
+        inline static std::map<std::string, coordinate::direction > mapping = {
+                {"E", coordinate::direction::E},
+                {"S", coordinate::direction::S},
+                {"W", coordinate::direction::W},
+                {"N", coordinate::direction::N}
+        };
     public:
         std::shared_ptr<cmd::command<mars>> evaluate(context ctx) override {
-            return std::make_shared<cmd::facing<mars>>();
+            const std::string direction = ctx.next();
+            return std::make_shared<cmd::facing<mars>>(mapping[direction]);
         }
     };
 

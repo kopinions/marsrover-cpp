@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <interpreter.hpp>
 #include <context.hpp>
+#include "coordinate.hpp"
 
 TEST(Interpreter, should_able_to_parse_the_placing_command) {
     std::string location = "1 2";
@@ -45,4 +46,16 @@ TEST(Interpreter, should_the_placing_command_make_the_mar_under_place) {
     mar.execute(cmds.at(0));
     EXPECT_EQ(mar.coord().x(), 1);
     EXPECT_EQ(mar.coord().y(), 2);
+}
+
+
+TEST(Interpreter, should_the_facing_command_make_the_mar_facing_direction) {
+    std::string location = "N";
+    interpreter it({std::make_shared<exp::facing>()});
+    context ctx(location);
+    auto cmds = it.interpret(ctx);
+    EXPECT_EQ(cmds.size(), 1);
+    mars mar{};
+    mar.execute(cmds.at(0));
+    EXPECT_EQ(mar.facing(), coordinate::direction::N);
 }

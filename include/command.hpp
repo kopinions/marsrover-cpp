@@ -2,6 +2,7 @@
 #define COMMAND_HPP
 
 #include "coordinate.hpp"
+
 namespace cmd {
     template<typename T>
     class command {
@@ -14,9 +15,14 @@ namespace cmd {
 
     template<typename T>
     class facing : public command<T> {
+    private:
+        coordinate::direction _direction;
     public:
-        void applied(T &t) override {
+        facing(coordinate::direction direction) :_direction(direction) {
 
+        }
+        void applied(T &t) override {
+            t.facing(_direction);
         }
     };
 
@@ -29,6 +35,7 @@ namespace cmd {
         placing(int x, int y) : _x(x), _y(y) {
 
         }
+
         void applied(T &t) override {
             t.locate(coordinate(_x, _y));
         }

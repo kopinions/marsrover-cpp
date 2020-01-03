@@ -6,6 +6,7 @@
 class mars {
 private:
     coordinate _coordinate = coordinate(0,0);
+    coordinate::direction _direction;
 public:
     void execute(std::shared_ptr<cmd::command<mars>> &cmd) {
         cmd->applied(*this);
@@ -19,8 +20,16 @@ public:
         _coordinate = c;
     };
 
+    void facing(coordinate::direction  direction)  {
+        _direction = direction;
+    };
+
     mars() {
 
+    }
+
+    coordinate::direction facing() {
+        return _direction;
     }
 };
 

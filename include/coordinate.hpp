@@ -12,6 +12,9 @@ public:
     int x() { return _x; };
 
     int y() { return _y; };
+    enum class direction {
+        E, S, W, N
+    };
 };
 
 #endif//COORDINATE_HPP
