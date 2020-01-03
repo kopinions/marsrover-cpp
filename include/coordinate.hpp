@@ -2,6 +2,7 @@
 #ifndef COORDINATE_HPP
 #define COORDINATE_HPP
 
+
 class coordinate {
 private:
     int _x;
@@ -12,9 +13,6 @@ public:
     int x() { return _x; };
 
     int y() { return _y; };
-    enum class direction {
-        E, S, W, N
-    };
 };
 
 #endif//COORDINATE_HPP

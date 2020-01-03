@@ -57,5 +57,17 @@ TEST(Interpreter, should_the_facing_command_make_the_mar_facing_direction) {
     EXPECT_EQ(cmds.size(), 1);
     mars mar{};
     mar.execute(cmds.at(0));
-    EXPECT_EQ(mar.facing(), coordinate::direction::N);
+    EXPECT_EQ(mar.facing(), direction::N);
+}
+
+TEST(Interpreter, should_able_to_parse_rotation_command) {
+    mars mar{};
+    mar.execute(std::make_shared<cmd::facing<mars>>(direction::E));
+    
+    std::string cmd = "L";
+    interpreter it({std::make_shared<exp::composite>()});
+    context ctx(cmd);
+    auto cmds = it.interpret(ctx);
+    mar.execute(cmds.at(0));
+    EXPECT_EQ(mar.facing(), direction::N);
 }

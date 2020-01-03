@@ -6,9 +6,9 @@
 class mars {
 private:
     coordinate _coordinate = coordinate(0,0);
-    coordinate::direction _direction;
+    direction _direction{};
 public:
-    void execute(std::shared_ptr<cmd::command<mars>> &cmd) {
+    void execute(const std::shared_ptr<cmd::command<mars>> &cmd) {
         cmd->applied(*this);
     }
 
@@ -20,15 +20,19 @@ public:
         _coordinate = c;
     };
 
-    void facing(coordinate::direction  direction)  {
+    void facing(direction  direction)  {
         _direction = direction;
     };
+
+    void rotate(direction::turn t) {
+        _direction.on(t);
+    }
 
     mars() {
 
     }
 
-    coordinate::direction facing() {
+    const direction facing() {
         return _direction;
     }
 };

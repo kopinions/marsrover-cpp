@@ -2,6 +2,7 @@
 #define COMMAND_HPP
 
 #include "coordinate.hpp"
+#include "direction.hpp"
 
 namespace cmd {
     template<typename T>
@@ -16,11 +17,12 @@ namespace cmd {
     template<typename T>
     class facing : public command<T> {
     private:
-        coordinate::direction _direction;
+        direction _direction;
     public:
-        facing(coordinate::direction direction) :_direction(direction) {
+        explicit facing(direction direction) : _direction(direction) {
 
         }
+
         void applied(T &t) override {
             t.facing(_direction);
         }
@@ -41,6 +43,33 @@ namespace cmd {
         }
     };
 
+    template<typename T>
+    class composite : public command<T> {
+    private:
+        std::vector<std::shared_ptr<command<T>>> _commands;
+    public:
+        composite(std::vector<std::shared_ptr<command<T>>> commands) : _commands(commands) {
+
+        }
+
+        void applied(T &t) override {
+            for (auto cmd :  _commands) {
+                cmd->applied(t);
+            }
+        }
+    };
+
+    template<typename T>
+    class rotate : public command<T> {
+    private:
+        direction::turn _towards;
+    public:
+        rotate(direction::turn towards) : _towards(towards) {}
+
+        void applied(T &t) override {
+            t.rotate(_towards);
+        }
+    };
 }
 
 
