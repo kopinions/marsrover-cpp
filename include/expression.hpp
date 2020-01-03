@@ -52,6 +52,9 @@ namespace exp {
                 if (c == 'R' || c == 'L') {
                     cmds.emplace_back(std::make_shared<cmd::rotate<mars>>(towards_mapping[c]));
                 }
+                if (c == 'M') {
+                    cmds.emplace_back(std::make_shared<cmd::move<mars>>());
+                }
             }
             return std::make_shared<cmd::composite<mars>>(cmds);
         }

@@ -28,6 +28,10 @@ public:
         _direction.on(t);
     }
 
+    void move() {
+        _coordinate.forward(_direction);
+    }
+
     mars() {
 
     }

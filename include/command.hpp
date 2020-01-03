@@ -70,6 +70,17 @@ namespace cmd {
             t.rotate(_towards);
         }
     };
+
+    template<typename T>
+    class move: public command<T> {
+    private:
+    public:
+        move() {};
+
+        void applied(T &t) override {
+            t.move();
+        }
+    };
 }
 
 

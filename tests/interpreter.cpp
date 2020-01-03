@@ -60,7 +60,7 @@ TEST(Interpreter, should_the_facing_command_make_the_mar_facing_direction) {
     EXPECT_EQ(mar.facing(), direction::N);
 }
 
-TEST(Interpreter, should_able_to_parse_rotation_command) {
+TEST(Interpreter, should_able_to_parse_rotation_left_command) {
     mars mar{};
     mar.execute(std::make_shared<cmd::facing<mars>>(direction::E));
     
@@ -70,4 +70,31 @@ TEST(Interpreter, should_able_to_parse_rotation_command) {
     auto cmds = it.interpret(ctx);
     mar.execute(cmds.at(0));
     EXPECT_EQ(mar.facing(), direction::N);
+}
+
+TEST(Interpreter, should_able_to_parse_rotation_right_command) {
+    mars mar{};
+    mar.execute(std::make_shared<cmd::facing<mars>>(direction::E));
+
+    std::string cmd = "R";
+    interpreter it({std::make_shared<exp::composite>()});
+    context ctx(cmd);
+    auto cmds = it.interpret(ctx);
+    mar.execute(cmds.at(0));
+    EXPECT_EQ(mar.facing(), direction::S);
+}
+
+TEST(Interpreter, should_able_to_parse_move_command) {
+    mars mar{};
+    mar.execute(std::make_shared<cmd::facing<mars>>(direction::E));
+    mar.execute(std::make_shared<cmd::placing<mars>>(1, 2));
+
+    std::string cmd = "M";
+    interpreter it({std::make_shared<exp::composite>()});
+    context ctx(cmd);
+    auto cmds = it.interpret(ctx);
+    mar.execute(cmds.at(0));
+    EXPECT_EQ(mar.facing(), direction::E);
+    EXPECT_EQ(mar.coord().x(), 2);
+    EXPECT_EQ(mar.coord().y(), 2);
 }
